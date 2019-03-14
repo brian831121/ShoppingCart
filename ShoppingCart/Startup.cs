@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShoppingCart.Data.Interfaces;
+using ShoppingCart.Data.Repository;
 
 namespace ShoppingCart
 {
@@ -41,6 +43,8 @@ namespace ShoppingCart
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
