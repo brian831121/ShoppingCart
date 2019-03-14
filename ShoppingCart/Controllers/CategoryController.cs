@@ -20,5 +20,11 @@ namespace ShoppingCart.Controllers
         {
             return View(_categoryRepository.GetAll());
         }
+
+        public IActionResult Create()
+        {
+            return View();
+
+        }
     }
 }
