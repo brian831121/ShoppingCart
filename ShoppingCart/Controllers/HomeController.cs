@@ -4,15 +4,28 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Data;
 using ShoppingCart.Models;
+using ShoppingCart.ViewModels;
 
 namespace ShoppingCart.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _db;
+        public HomeController(ApplicationDbContext db)
         {
-            return View();
+            _db = db;
+        }
+        public async Task<IActionResult> IndexAsync()
+        {
+            IndexViewModel IndexVm = new IndexViewModel()
+            {
+                Products = await _db.Products.Include(p => p.Category).ToListAsync(),
+                Categories = await _db.Categories.ToListAsync()
+            };
+            return View(IndexVm);
         }
 
         public IActionResult Privacy()
