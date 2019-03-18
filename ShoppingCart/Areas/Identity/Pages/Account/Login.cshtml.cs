@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ShoppingCart.Models;
 using ShoppingCart.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
+using ShoppingCart.Utilities;
 
 namespace ShoppingCart.Areas.Identity.Pages.Account
 {
@@ -85,7 +86,7 @@ namespace ShoppingCart.Areas.Identity.Pages.Account
                 {
                     var user = _applicationUserRepository.GetApplicationUserByEmail(Input.Email);
                     var shoppingCarts = _cartRepository.GetCartsByUserId(user.Id).ToList();
-                    HttpContext.Session.SetInt32("CartCount", shoppingCarts.Count);
+                    HttpContext.Session.SetInt32(SessionUtility.CartCount, shoppingCarts.Count);
 
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);

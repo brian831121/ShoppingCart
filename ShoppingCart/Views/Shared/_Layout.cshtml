@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using ShoppingCart.Utilities
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,7 +33,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown text-white-50">
-                            <a class="nav-link dropdown-toggle"  href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ContentManagement
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
@@ -46,6 +49,29 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(@SessionUtility.CartCount) != null)
+                        {
+                            <li>
+                                <a href="#" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(@SessionUtility.CartCount);
+                                    }
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; @count
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(@SessionUtility.CartCount);
+                                    }
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>
