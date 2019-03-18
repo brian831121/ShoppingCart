@@ -15,17 +15,17 @@ namespace ShoppingCart.Data.Repository
 
         public IEnumerable<Product> GetAllWithCategory()
         {
-            return _db.Products.Include(p => p.Category);
+            return _db.Product.Include(p => p.Category);
         }
 
         public Product GetWithCategoryById(int id)
         {
-            return _db.Products.Include(p => p.Category).FirstOrDefault(m => m.Id.Equals(id));
+            return _db.Product.Include(p => p.Category).FirstOrDefault(m => m.Id.Equals(id));
         }
 
         public IEnumerable<Product> GetProductByCategoryId(int id)
         {
-            return _db.Products.Where(p => p.CategoryId.Equals(id)).Include(p => p.Category);
+            return _db.Product.Where(p => p.CategoryId.Equals(id)).Include(p => p.Category);
         }
     }
 }
