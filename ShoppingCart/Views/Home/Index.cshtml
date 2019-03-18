@@ -1,8 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model  ShoppingCart.ViewModels.IndexViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<br/>
+<div class="backgroundwhite container">
+    @foreach (var category in Model.Categories)
+    {
+        <div class="row" id="menu-wrapper">
+            <partial name="_CategoryMenu" model=" category"/>
+        </div>
+    }
 </div>
