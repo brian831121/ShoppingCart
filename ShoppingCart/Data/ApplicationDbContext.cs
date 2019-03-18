@@ -14,8 +14,9 @@ namespace ShoppingCart.Data
         {
         }
 
+        public DbSet<ApplicationUser> AppplicationUser { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
-        public DbSet<ShoppingCart.Models.ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<Cart> Cart { get; set; }
     }
 }
