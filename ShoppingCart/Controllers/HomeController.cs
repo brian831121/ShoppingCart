@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Data;
+using ShoppingCart.Data.Interfaces;
 using ShoppingCart.Models;
 using ShoppingCart.ViewModels;
 
@@ -14,16 +15,20 @@ namespace ShoppingCart.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public HomeController(ApplicationDbContext db)
+        private IProductRepository _productRepository;
+        private ICategoryRepository _categoryRepository;
+
+        public HomeController(ApplicationDbContext db, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
-            _db = db;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             IndexViewModel IndexVm = new IndexViewModel()
             {
-                Products = await _db.Products.Include(p => p.Category).ToListAsync(),
-                Categories = await _db.Categories.ToListAsync()
+                Products = _productRepository.GetAllWithCategory(),
+                Categories = _categoryRepository.GetAll()
             };
             return View(IndexVm);
         }
