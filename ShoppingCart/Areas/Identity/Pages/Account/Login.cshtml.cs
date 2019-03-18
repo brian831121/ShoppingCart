@@ -9,18 +9,25 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ShoppingCart.Models;
+using ShoppingCart.Data.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoppingCart.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IApplicationUserRepository _applicationUserRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, IApplicationUserRepository applicationUserRepository, ICartRepository cartRepository, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _applicationUserRepository = applicationUserRepository;
+            _cartRepository = cartRepository;
             _logger = logger;
         }
 
@@ -76,6 +83,10 @@ namespace ShoppingCart.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    var user = _applicationUserRepository.GetApplicationUserByEmail(Input.Email);
+                    var shoppingCarts = _cartRepository.GetCartsByUserId(user.Id).ToList();
+                    HttpContext.Session.SetInt32("CartCount", shoppingCarts.Count);
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
