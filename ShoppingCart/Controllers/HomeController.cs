@@ -23,7 +23,7 @@ namespace ShoppingCart.Controllers
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IndexViewModel IndexVm = new IndexViewModel()
             {
