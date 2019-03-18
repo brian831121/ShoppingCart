@@ -27,7 +27,6 @@ namespace ShoppingCart.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _hostingEnvironment = hostingEnvironment;
-            _db = db;
             ProductVM = new ProductViewModel()
             {
                 Categories = _categoryRepository.GetAll(),
@@ -100,7 +99,7 @@ namespace ShoppingCart.Controllers
             }
 
             ProductVM.Product = product;
-            ProductVM.Categories = _db.Categories.Where(c =>c.Id.Equals(product.CategoryId));
+            ProductVM.Categories = _categoryRepository.GetAll().Where(c =>c.Id.Equals(product.CategoryId));
             return View(ProductVM);
         }
 
@@ -125,7 +124,7 @@ namespace ShoppingCart.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
+        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
