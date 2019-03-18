@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ShoppingCart.Models
 {
-    public class ShoppingCart
+    public class Cart
     {
-        public ShoppingCart()
+        public Cart()
         {
             Count = 1;
         }
