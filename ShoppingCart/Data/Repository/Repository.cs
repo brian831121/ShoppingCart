@@ -25,10 +25,22 @@ namespace ShoppingCart.Data.Repository
             _db.Add(entity);
             _db.SaveChanges();
         }
+        public void CreateRange(IEnumerable<T> entity)
+        {
+            _db.AddRange(entity);
+            _db.SaveChanges();
+        }
+
 
         public void Delete(T entity)
         {
             _db.Remove(entity);
+            _db.SaveChanges();
+        }
+
+        public void DeleteRange(IEnumerable<T> entity)
+        {
+            _db.RemoveRange(entity);
             _db.SaveChanges();
         }
 
@@ -49,7 +61,6 @@ namespace ShoppingCart.Data.Repository
 
         public void Update(T entity)
         {
-            _db.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _db.SaveChanges();
         }
     }
