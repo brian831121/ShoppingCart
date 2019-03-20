@@ -17,5 +17,10 @@ namespace ShoppingCart.Data.Repository
         {
             return _db.AppplicationUser.Where(a => a.Email.Equals(email)).FirstOrDefault();
         }
+        public ApplicationUser GetApplicationUserById(string id)
+        {
+            return _db.AppplicationUser.Where(a => a.Id.Equals(id)).FirstOrDefault();
+        }
+
     }
 }
