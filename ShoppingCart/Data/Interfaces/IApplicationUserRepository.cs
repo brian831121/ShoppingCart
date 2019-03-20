@@ -9,5 +9,6 @@ namespace ShoppingCart.Data.Interfaces
     public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
         ApplicationUser GetApplicationUserByEmail(string email);
+        ApplicationUser GetApplicationUserById(string id);
     }
 }
