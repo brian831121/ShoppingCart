@@ -11,8 +11,10 @@ namespace ShoppingCart.Data.Interfaces
         IEnumerable<T> Find(Func<T, bool> predicate);
         T GetById(int id);
         void Create(T entity);
+        void CreateRange(IEnumerable<T> entity);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteRange(IEnumerable<T> entity);
         int Count(Func<T, bool> predicate);
 
     }
