@@ -8,7 +8,7 @@ namespace ShoppingCart.ViewModels
 {
     public class OrderItemCartViewModel
     {
-        public List<Cart> CardList { get; set; }
+        public List<Cart> CartList { get; set; }
         public Order Order { get; set; }
     }
 }
