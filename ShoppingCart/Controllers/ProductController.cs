@@ -18,11 +18,10 @@ namespace ShoppingCart.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly ApplicationDbContext _db;
 
         [BindProperty]
         public ProductViewModel ProductVM { get; set; }
-        public ProductController(ICategoryRepository categoryRepository, IProductRepository productRepository, IHostingEnvironment hostingEnvironment, ApplicationDbContext db)
+        public ProductController(ICategoryRepository categoryRepository, IProductRepository productRepository, IHostingEnvironment hostingEnvironment)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
@@ -58,7 +57,7 @@ namespace ShoppingCart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Product product)
+        public IActionResult Create(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +69,7 @@ namespace ShoppingCart.Controllers
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
-            var ProductFromDB = _productRepository.GetById(ProductVM.Product.Id);
+            var productFromDB = _productRepository.GetById(ProductVM.Product.Id);
 
             if (files.Count > 0)
             {
@@ -82,10 +81,10 @@ namespace ShoppingCart.Controllers
                     files[0].CopyTo(filesStream);
                 }
 
-                ProductFromDB.Image = @"\images\" + ProductVM.Product.Id + extension;
-             }
+                productFromDB.Image = @"\images\" + ProductVM.Product.Id + extension;
+            }
 
-            await _db.SaveChangesAsync();
+            _productRepository.Update(productFromDB);
             return RedirectToAction(nameof(Index));
         }
 
