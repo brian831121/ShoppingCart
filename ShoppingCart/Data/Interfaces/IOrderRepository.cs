@@ -9,5 +9,6 @@ namespace ShoppingCart.Data.Interfaces
     public interface IOrderRepository : IRepository<Order>
     {
         IEnumerable<Order> GetOrdersByUserId(string id);
+        Order Include();
     }
 }
