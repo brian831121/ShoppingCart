@@ -31,6 +31,9 @@ namespace ShoppingCart.Models
         public string Status { get; set; }
         public string PaymentStatus { get; set; }
 
+        public string PickupName { get; set; }
+        public string PhoneNumber { get; set; }
+
 
 
     }
